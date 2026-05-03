@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import { Header } from '@/components/header'
@@ -23,8 +23,20 @@ import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useUser } from '@/lib/user-context'
 
-export default function Home() {
+// Component that handles URL search params - needs to be wrapped in Suspense
+function CartParamHandler({ onOpenCart }: { onOpenCart: () => void }) {
   const searchParams = useSearchParams()
+  
+  useEffect(() => {
+    if (searchParams.get('cart') === 'open') {
+      onOpenCart()
+    }
+  }, [searchParams, onOpenCart])
+  
+  return null
+}
+
+export default function Home() {
   const [selectedItem, setSelectedItem] = useState<FoodItem | null>(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const [lastRating, setLastRating] = useState({ itemName: '', rating: 0 })
@@ -38,12 +50,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const { addRating } = useUser()
 
-  // Handle URL params for cart
-  useEffect(() => {
-    if (searchParams.get('cart') === 'open') {
-      setShowCart(true)
-    }
-  }, [searchParams])
+  const handleOpenCart = useCallback(() => setShowCart(true), [])
 
   const handleSubmitRating = useCallback(async (rating: number, review: string) => {
     await new Promise(resolve => setTimeout(resolve, 1500))
@@ -67,6 +74,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
+      {/* Handle URL search params for cart */}
+      <Suspense fallback={null}>
+        <CartParamHandler onOpenCart={handleOpenCart} />
+      </Suspense>
+      
       <Header 
         onOpenProfile={() => setShowProfileModal(true)}
         onOpenFavorites={() => setShowFavoritesModal(true)}
