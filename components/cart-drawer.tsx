@@ -2,10 +2,9 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Minus, Plus, Trash2, ShoppingBag, MapPin, Clock, ChevronRight, CheckCircle } from 'lucide-react'
+import { X, Minus, Plus, Trash2, ShoppingBag, MapPin, Clock, ChevronRight, CheckCircle, Sparkles, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/lib/cart-context'
-import { foodStalls } from '@/lib/data'
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -45,10 +44,10 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   }
 
   const pickupLocations = [
-    { id: '1', name: 'Gate A - Main Entrance', time: '2 min walk' },
-    { id: '2', name: 'Gate B - East Side', time: '4 min walk' },
-    { id: '3', name: 'Gate C - South Stand', time: '3 min walk' },
-    { id: '4', name: 'Near Your Seat', time: '5 min walk' }
+    { id: '1', name: 'Gate A - Main Entrance', time: '2 min walk', popular: true },
+    { id: '2', name: 'Gate B - East Side', time: '4 min walk', popular: false },
+    { id: '3', name: 'Gate C - South Stand', time: '3 min walk', popular: false },
+    { id: '4', name: 'Near Your Seat', time: '5 min walk', popular: false }
   ]
 
   return (
@@ -60,7 +59,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/50"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
             onClick={handleClose}
           />
 
@@ -69,23 +68,63 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed right-0 top-0 bottom-0 w-full sm:max-w-md z-50 bg-background flex flex-col pb-16 md:pb-0"
+            transition={{ type: 'spring', damping: 30, stiffness: 350 }}
+            className="fixed right-0 top-0 bottom-0 w-full sm:max-w-[420px] z-50 bg-background shadow-2xl flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border">
-              <div className="flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                <h2 className="text-base sm:text-lg font-semibold">
-                  {step === 'cart' && `Cart (${totalItems})`}
-                  {step === 'pickup' && 'Select Pickup'}
-                  {step === 'confirm' && 'Confirm'}
-                  {step === 'success' && 'Placed!'}
-                </h2>
+            <div className="relative px-4 py-4 border-b border-border/50">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5" />
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {step !== 'cart' && step !== 'success' && (
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => setStep(step === 'confirm' ? 'pickup' : 'cart')}
+                      className="w-8 h-8 -ml-1"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                    </Button>
+                  )}
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20">
+                    <ShoppingBag className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold">
+                      {step === 'cart' && 'Your Cart'}
+                      {step === 'pickup' && 'Pickup Point'}
+                      {step === 'confirm' && 'Confirm Order'}
+                      {step === 'success' && 'Order Placed'}
+                    </h2>
+                    {step === 'cart' && totalItems > 0 && (
+                      <p className="text-xs text-muted-foreground">{totalItems} item{totalItems > 1 ? 's' : ''}</p>
+                    )}
+                  </div>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={handleClose} 
+                  className="w-9 h-9 rounded-full hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <X className="w-5 h-5" />
+                </Button>
               </div>
-              <Button variant="ghost" size="icon" onClick={handleClose} className="w-8 h-8 sm:w-9 sm:h-9">
-                <X className="w-4 h-4 sm:w-5 sm:h-5" />
-              </Button>
+
+              {/* Progress Steps */}
+              {step !== 'success' && items.length > 0 && (
+                <div className="flex items-center gap-2 mt-4">
+                  {['cart', 'pickup', 'confirm'].map((s, i) => (
+                    <div key={s} className="flex items-center flex-1">
+                      <div className={`flex-1 h-1.5 rounded-full transition-all duration-300 ${
+                        i < ['cart', 'pickup', 'confirm'].indexOf(step) + 1 
+                          ? 'bg-primary' 
+                          : 'bg-muted'
+                      }`} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Content */}
@@ -98,78 +137,90 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="p-3 sm:p-4 space-y-3 sm:space-y-4"
+                    className="p-4"
                   >
                     {items.length === 0 ? (
-                      <div className="text-center py-8 sm:py-12">
-                        <ShoppingBag className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-muted-foreground mb-3 sm:mb-4" />
-                        <h3 className="font-semibold mb-1 text-sm sm:text-base">Your cart is empty</h3>
-                        <p className="text-xs sm:text-sm text-muted-foreground">Add some delicious items!</p>
+                      <div className="text-center py-16">
+                        <div className="w-20 h-20 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-4">
+                          <ShoppingBag className="w-10 h-10 text-muted-foreground/50" />
+                        </div>
+                        <h3 className="font-semibold text-lg mb-1">Cart is Empty</h3>
+                        <p className="text-sm text-muted-foreground max-w-[200px] mx-auto">
+                          Add some delicious stadium food to get started!
+                        </p>
                       </div>
                     ) : (
-                      <>
+                      <div className="space-y-3">
                         {items.map((cartItem, index) => (
                           <motion.div
                             key={cartItem.item.id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.05 }}
-                            className="flex gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-secondary/30 border border-border"
+                            className="group relative bg-card rounded-2xl border border-border/50 overflow-hidden shadow-sm hover:shadow-md transition-all"
                           >
-                            <img
-                              src={cartItem.item.image}
-                              alt={cartItem.item.name}
-                              className="w-16 h-16 sm:w-20 sm:h-20 rounded-md sm:rounded-lg object-cover object-center shrink-0"
-                            />
-                            <div className="flex-1 min-w-0">
-                              <h4 className="font-medium truncate text-sm sm:text-base">{cartItem.item.name}</h4>
-                              <p className="text-[10px] sm:text-xs text-muted-foreground truncate">{cartItem.item.stallName}</p>
-                              <p className="font-semibold mt-0.5 sm:mt-1 text-sm sm:text-base">Rs.{cartItem.item.price}</p>
-
-                              <div className="flex items-center justify-between mt-1.5 sm:mt-2">
-                                <div className="flex items-center gap-1.5 sm:gap-2">
+                            <div className="flex gap-3 p-3">
+                              <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0">
+                                <img
+                                  src={cartItem.item.image}
+                                  alt={cartItem.item.name}
+                                  className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                              </div>
+                              <div className="flex-1 min-w-0 py-1">
+                                <div className="flex items-start justify-between gap-2">
+                                  <div>
+                                    <h4 className="font-semibold text-sm leading-tight">{cartItem.item.name}</h4>
+                                    <p className="text-xs text-muted-foreground mt-0.5">{cartItem.item.stallName}</p>
+                                  </div>
                                   <Button
                                     size="icon"
-                                    variant="outline"
-                                    className="w-6 h-6 sm:w-7 sm:h-7"
-                                    onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity - 1)}
+                                    variant="ghost"
+                                    className="w-7 h-7 -mr-1 -mt-1 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                    onClick={() => removeFromCart(cartItem.item.id)}
                                   >
-                                    <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                                  </Button>
-                                  <span className="w-5 sm:w-6 text-center font-medium text-xs sm:text-sm">{cartItem.quantity}</span>
-                                  <Button
-                                    size="icon"
-                                    variant="outline"
-                                    className="w-6 h-6 sm:w-7 sm:h-7"
-                                    onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity + 1)}
-                                  >
-                                    <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                                    <Trash2 className="w-3.5 h-3.5" />
                                   </Button>
                                 </div>
-                                <Button
-                                  size="icon"
-                                  variant="ghost"
-                                  className="w-6 h-6 sm:w-7 sm:h-7 text-destructive"
-                                  onClick={() => removeFromCart(cartItem.item.id)}
-                                >
-                                  <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                                </Button>
+
+                                <div className="flex items-center justify-between mt-3">
+                                  <div className="flex items-center gap-1 bg-secondary rounded-lg p-0.5">
+                                    <Button
+                                      size="icon"
+                                      variant="ghost"
+                                      className="w-7 h-7 rounded-md hover:bg-background"
+                                      onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity - 1)}
+                                    >
+                                      <Minus className="w-3 h-3" />
+                                    </Button>
+                                    <span className="w-8 text-center font-semibold text-sm">{cartItem.quantity}</span>
+                                    <Button
+                                      size="icon"
+                                      variant="ghost"
+                                      className="w-7 h-7 rounded-md hover:bg-background"
+                                      onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity + 1)}
+                                    >
+                                      <Plus className="w-3 h-3" />
+                                    </Button>
+                                  </div>
+                                  <p className="font-bold text-primary">Rs.{cartItem.item.price * cartItem.quantity}</p>
+                                </div>
                               </div>
                             </div>
                           </motion.div>
                         ))}
 
-                        {items.length > 0 && (
-                          <Button
-                            variant="ghost"
-                            className="w-full text-destructive"
-                            onClick={clearCart}
-                          >
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Clear Cart
-                          </Button>
-                        )}
-                      </>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full text-muted-foreground hover:text-destructive"
+                          onClick={clearCart}
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          Clear All Items
+                        </Button>
+                      </div>
                     )}
                   </motion.div>
                 )}
@@ -181,33 +232,42 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="p-4 space-y-3"
+                    className="p-4"
                   >
                     <p className="text-sm text-muted-foreground mb-4">
-                      Choose where you want to pick up your order
+                      Select where you&apos;d like to collect your order
                     </p>
-                    {pickupLocations.map((location, index) => (
-                      <motion.button
-                        key={location.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        onClick={() => handleSelectPickup(location.name)}
-                        className="w-full flex items-center gap-3 p-4 rounded-xl bg-secondary/30 border border-border hover:border-primary/50 transition-colors text-left"
-                      >
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <MapPin className="w-5 h-5 text-primary" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-medium">{location.name}</p>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Clock className="w-3 h-3" />
-                            <span>{location.time}</span>
+                    <div className="space-y-2">
+                      {pickupLocations.map((location, index) => (
+                        <motion.button
+                          key={location.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                          onClick={() => handleSelectPickup(location.name)}
+                          className="w-full flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all text-left group"
+                        >
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-colors">
+                            <MapPin className="w-5 h-5 text-primary" />
                           </div>
-                        </div>
-                        <ChevronRight className="w-5 h-5 text-muted-foreground" />
-                      </motion.button>
-                    ))}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium text-sm">{location.name}</p>
+                              {location.popular && (
+                                <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-accent/20 text-accent">
+                                  Popular
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
+                              <Clock className="w-3 h-3" />
+                              <span>{location.time}</span>
+                            </div>
+                          </div>
+                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
+                        </motion.button>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
 
@@ -218,36 +278,57 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="p-4"
+                    className="p-4 space-y-4"
                   >
-                    <div className="p-4 rounded-xl bg-secondary/30 border border-border mb-4">
-                      <h4 className="font-semibold mb-3">Order Summary</h4>
-                      <div className="space-y-2">
+                    {/* Order Items */}
+                    <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+                      <div className="px-4 py-3 border-b border-border/50 bg-muted/30">
+                        <h4 className="font-semibold text-sm">Order Summary</h4>
+                      </div>
+                      <div className="p-4 space-y-3">
                         {items.map(item => (
-                          <div key={item.item.id} className="flex justify-between text-sm">
-                            <span>{item.item.name} x{item.quantity}</span>
-                            <span>Rs.{item.item.price * item.quantity}</span>
+                          <div key={item.item.id} className="flex items-center gap-3">
+                            <img 
+                              src={item.item.image} 
+                              alt={item.item.name}
+                              className="w-10 h-10 rounded-lg object-cover"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium truncate">{item.item.name}</p>
+                              <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
+                            </div>
+                            <span className="text-sm font-semibold">Rs.{item.item.price * item.quantity}</span>
                           </div>
                         ))}
-                        <div className="border-t border-border pt-2 mt-2 flex justify-between font-semibold">
-                          <span>Total</span>
-                          <span>Rs.{totalAmount}</span>
+                        <div className="pt-3 border-t border-border/50 flex justify-between items-center">
+                          <span className="font-medium">Total</span>
+                          <span className="text-lg font-bold text-primary">Rs.{totalAmount}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-primary/10 border border-primary/20">
-                      <div className="flex items-center gap-2 mb-1">
-                        <MapPin className="w-4 h-4 text-primary" />
-                        <span className="font-medium">Pickup Location</span>
+                    {/* Pickup Location */}
+                    <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                          <MapPin className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Pickup at</p>
+                          <p className="font-semibold text-sm">{selectedPickup}</p>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">{selectedPickup}</p>
                     </div>
 
-                    <div className="mt-4 p-4 rounded-xl bg-secondary/30">
-                      <p className="text-sm text-muted-foreground">
-                        Estimated preparation time: <span className="font-medium text-foreground">10-15 mins</span>
-                      </p>
+                    {/* Estimated Time */}
+                    <div className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border/50">
+                      <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                        <Clock className="w-5 h-5 text-accent" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Estimated ready in</p>
+                        <p className="font-semibold">10-15 minutes</p>
+                      </div>
                     </div>
                   </motion.div>
                 )}
@@ -264,23 +345,40 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', delay: 0.2 }}
-                      className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4"
+                      className="relative w-24 h-24 mx-auto mb-6"
                     >
-                      <CheckCircle className="w-10 h-10 text-green-500" />
-                    </motion.div>
-                    <h3 className="text-xl font-bold mb-2">Order Confirmed!</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Order ID: <span className="font-mono">{currentOrder.id}</span>
-                    </p>
-                    <div className="p-4 rounded-xl bg-secondary/30 inline-block">
-                      <div className="flex items-center gap-2 text-primary">
-                        <Clock className="w-5 h-5" />
-                        <span className="font-semibold">Ready in ~{currentOrder.estimatedTime} mins</span>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-green-500/30 to-accent/30 animate-pulse" />
+                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-green-500 to-accent flex items-center justify-center shadow-lg">
+                        <CheckCircle className="w-10 h-10 text-white" />
                       </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-4">
-                      We&apos;ll notify you when your order is ready!
-                    </p>
+                    </motion.div>
+                    
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <h3 className="text-2xl font-bold mb-2">Order Confirmed!</h3>
+                      <p className="text-muted-foreground mb-6">
+                        Your food is being prepared
+                      </p>
+                      
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 text-sm">
+                        <span className="text-muted-foreground">Order ID:</span>
+                        <span className="font-mono font-semibold">{currentOrder.id}</span>
+                      </div>
+
+                      <div className="mt-6 p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 inline-block">
+                        <div className="flex items-center gap-3 text-primary">
+                          <Sparkles className="w-5 h-5" />
+                          <span className="font-bold text-lg">Ready in ~{currentOrder.estimatedTime} mins</span>
+                        </div>
+                      </div>
+                      
+                      <p className="text-sm text-muted-foreground mt-6">
+                        We&apos;ll notify you when it&apos;s ready!
+                      </p>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -288,42 +386,41 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
             {/* Footer */}
             {step !== 'success' && items.length > 0 && (
-              <div className="p-3 sm:p-4 border-t border-border bg-background">
+              <div className="p-4 border-t border-border/50 bg-card/50 backdrop-blur-sm safe-area-bottom">
                 {step === 'cart' && (
-                  <>
-                    <div className="flex justify-between mb-2 sm:mb-3">
-                      <span className="text-sm sm:text-base text-muted-foreground">Subtotal</span>
-                      <span className="font-semibold text-sm sm:text-base">Rs.{totalAmount}</span>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span className="text-xl font-bold">Rs.{totalAmount}</span>
                     </div>
-                    <Button className="w-full h-10 sm:h-12 text-sm" onClick={handleCheckout}>
-                      Checkout
-                      <ChevronRight className="w-4 h-4 ml-1" />
+                    <Button 
+                      className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg shadow-primary/20" 
+                      onClick={handleCheckout}
+                    >
+                      Proceed to Checkout
+                      <ChevronRight className="w-5 h-5 ml-1" />
                     </Button>
-                  </>
-                )}
-
-                {step === 'pickup' && (
-                  <Button variant="outline" className="w-full h-10 sm:h-11 text-sm" onClick={() => setStep('cart')}>
-                    Back to Cart
-                  </Button>
+                  </div>
                 )}
 
                 {step === 'confirm' && (
-                  <div className="space-y-2">
-                    <Button className="w-full h-10 sm:h-12 text-sm" onClick={handlePlaceOrder}>
-                      Place Order - Rs.{totalAmount}
-                    </Button>
-                    <Button variant="outline" className="w-full h-9 sm:h-10 text-sm" onClick={() => setStep('pickup')}>
-                      Change Pickup
-                    </Button>
-                  </div>
+                  <Button 
+                    className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-accent shadow-lg shadow-accent/20" 
+                    onClick={handlePlaceOrder}
+                  >
+                    <CheckCircle className="w-5 h-5 mr-2" />
+                    Place Order - Rs.{totalAmount}
+                  </Button>
                 )}
               </div>
             )}
 
             {step === 'success' && (
-              <div className="p-3 sm:p-4 border-t border-border">
-                <Button className="w-full h-10 sm:h-11" onClick={handleClose}>
+              <div className="p-4 border-t border-border/50 safe-area-bottom">
+                <Button 
+                  className="w-full h-12 text-base font-semibold rounded-xl" 
+                  onClick={handleClose}
+                >
                   Done
                 </Button>
               </div>
