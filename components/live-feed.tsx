@@ -188,11 +188,11 @@ function TrendingCard({ trending, rank }: { trending: TrendingItem; rank: number
       <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm border ${getRankStyle(rank)}`}>
         #{rank}
       </div>
-      <div className="w-12 h-12 rounded-lg overflow-hidden bg-muted">
+      <div className="w-12 h-12 rounded-lg overflow-hidden bg-muted shrink-0">
         <img 
           src={trending.item.image} 
           alt={trending.item.name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+          className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform"
         />
       </div>
       <div className="flex-1 min-w-0">

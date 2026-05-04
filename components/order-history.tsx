@@ -69,7 +69,7 @@ function OrderCard({ order }: { order: Order }) {
             <img
               src={item.item.image}
               alt={item.item.name}
-              className="w-10 h-10 rounded-lg object-cover"
+              className="w-10 h-10 rounded-lg object-cover object-center shrink-0 bg-muted"
             />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{item.item.name}</p>

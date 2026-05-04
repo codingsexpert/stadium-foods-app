@@ -117,11 +117,11 @@ export default function StallPage() {
                 transition={{ delay: index * 0.1 }}
                 className="flex gap-4 p-4 rounded-2xl bg-secondary/30 border border-border"
               >
-                <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0">
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden shrink-0">
                   <img 
                     src={item.image} 
                     alt={item.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center"
                   />
                   {isProfileSetup && (
                     <button

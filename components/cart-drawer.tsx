@@ -119,7 +119,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             <img
                               src={cartItem.item.image}
                               alt={cartItem.item.name}
-                              className="w-20 h-20 rounded-lg object-cover"
+                              className="w-20 h-20 rounded-lg object-cover object-center shrink-0"
                             />
                             <div className="flex-1 min-w-0">
                               <h4 className="font-medium truncate">{cartItem.item.name}</h4>

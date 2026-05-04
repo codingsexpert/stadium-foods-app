@@ -80,11 +80,11 @@ export function FavoritesModal({ isOpen, onClose, onSelectItem }: FavoritesModal
                       className="flex items-center gap-3 p-3 bg-secondary rounded-xl group cursor-pointer hover:bg-secondary/80 transition-colors"
                       onClick={() => handleSelectItem(item)}
                     >
-                      <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0">
+                      <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-muted">
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-center"
                         />
                       </div>
                       <div className="flex-1 min-w-0">

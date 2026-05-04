@@ -201,11 +201,11 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
               onClick={() => onSelectItem(item)}
               className="glass-card rounded-2xl overflow-hidden cursor-pointer group"
             >
-              <div className="relative h-36 overflow-hidden">
+              <div className="relative h-40 sm:h-36 overflow-hidden">
                 <img 
                   src={item.image} 
                   alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
                 
