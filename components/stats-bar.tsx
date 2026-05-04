@@ -16,7 +16,7 @@ export function StatsBar() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
+      className="grid grid-cols-4 gap-1.5 sm:gap-2 md:gap-3"
     >
       {stats.map((stat, index) => (
         <motion.div
@@ -26,14 +26,14 @@ export function StatsBar() {
           transition={{ delay: 0.1 * index }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="glass-card rounded-xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3"
+          className="glass-card rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 flex flex-col sm:flex-row items-center sm:items-center gap-1 sm:gap-2 md:gap-3"
         >
-          <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 ${stat.color}`}>
-            <stat.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className={`w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-md sm:rounded-lg bg-secondary flex items-center justify-center shrink-0 ${stat.color}`}>
+            <stat.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
           </div>
-          <div className="min-w-0">
-            <p className="text-base sm:text-lg font-bold truncate">{stat.value}</p>
-            <p className="text-[10px] sm:text-xs text-muted-foreground">{stat.label}</p>
+          <div className="min-w-0 text-center sm:text-left">
+            <p className="text-sm sm:text-base md:text-lg font-bold truncate">{stat.value}</p>
+            <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground truncate">{stat.label}</p>
           </div>
         </motion.div>
       ))}

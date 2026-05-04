@@ -60,71 +60,72 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-3 bottom-20 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md md:w-full bg-card rounded-2xl shadow-xl z-50 overflow-hidden flex flex-col md:max-h-[90vh]"
+            className="fixed inset-2 sm:inset-3 bottom-[72px] sm:bottom-20 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md md:w-full bg-card rounded-xl sm:rounded-2xl shadow-xl z-50 overflow-hidden flex flex-col md:max-h-[90vh]"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border">
-              <h2 className="text-lg font-bold">
-                {isProfileSetup ? 'Your Profile' : 'Set Up Profile'}
+            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border">
+              <h2 className="text-base sm:text-lg font-bold">
+                {isProfileSetup ? 'Profile' : 'Setup Profile'}
               </h2>
-              <Button variant="ghost" size="icon" onClick={onClose}>
-                <X className="w-5 h-5" />
+              <Button variant="ghost" size="icon" onClick={onClose} className="w-8 h-8 sm:w-9 sm:h-9">
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-6">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 sm:space-y-6">
               {!isProfileSetup ? (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="text-center py-4">
-                    <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
-                      <User className="w-10 h-10 text-primary" />
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                  <div className="text-center py-3 sm:py-4">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                      <User className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
                     </div>
-                    <p className="text-muted-foreground">
-                      Create your profile to save favorites and track your ratings
+                    <p className="text-xs sm:text-sm text-muted-foreground px-2">
+                      Create your profile to save favorites and track ratings
                     </p>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Display Name</label>
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm font-medium">Display Name</label>
                     <Input
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Enter your name"
                       autoFocus
+                      className="h-9 sm:h-10 text-sm"
                     />
                   </div>
-                  <Button type="submit" className="w-full" disabled={!name.trim()}>
+                  <Button type="submit" className="w-full h-9 sm:h-10 text-sm" disabled={!name.trim()}>
                     Create Profile
                   </Button>
                 </form>
               ) : user && (
                 <>
                   {/* Profile Card */}
-                  <div className="flex items-center gap-4 p-4 bg-secondary rounded-xl">
-                    <div className={`w-16 h-16 rounded-full ${user.avatarColor} flex items-center justify-center`}>
-                      <span className="text-2xl font-bold text-white">{user.initials}</span>
+                  <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary rounded-lg sm:rounded-xl">
+                    <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full ${user.avatarColor} flex items-center justify-center`}>
+                      <span className="text-lg sm:text-2xl font-bold text-white">{user.initials}</span>
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       {isEditing ? (
-                        <form onSubmit={handleSubmit} className="flex gap-2">
+                        <form onSubmit={handleSubmit} className="flex gap-1.5 sm:gap-2 flex-wrap">
                           <Input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="h-8"
+                            className="h-7 sm:h-8 flex-1 min-w-[100px] text-sm"
                             autoFocus
                           />
-                          <Button type="submit" size="sm">Save</Button>
-                          <Button type="button" size="sm" variant="ghost" onClick={() => setIsEditing(false)}>
+                          <Button type="submit" size="sm" className="h-7 sm:h-8 text-xs">Save</Button>
+                          <Button type="button" size="sm" variant="ghost" onClick={() => setIsEditing(false)} className="h-7 sm:h-8 text-xs">
                             Cancel
                           </Button>
                         </form>
                       ) : (
                         <>
-                          <h3 className="text-xl font-bold">{user.displayName}</h3>
+                          <h3 className="text-lg sm:text-xl font-bold truncate">{user.displayName}</h3>
                           <Button
                             variant="link"
                             size="sm"
-                            className="h-auto p-0 text-xs text-muted-foreground"
+                            className="h-auto p-0 text-[10px] sm:text-xs text-muted-foreground"
                             onClick={() => setIsEditing(true)}
                           >
                             Edit name
@@ -135,21 +136,21 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                   </div>
 
                   {/* Stats */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-secondary rounded-xl text-center">
-                      <Star className="w-6 h-6 mx-auto mb-2 text-yellow-500" />
-                      <div className="text-2xl font-bold">{user.ratingHistory.length}</div>
-                      <div className="text-xs text-muted-foreground">Ratings</div>
+                  <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                    <div className="p-3 sm:p-4 bg-secondary rounded-lg sm:rounded-xl text-center">
+                      <Star className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1.5 sm:mb-2 text-yellow-500" />
+                      <div className="text-xl sm:text-2xl font-bold">{user.ratingHistory.length}</div>
+                      <div className="text-[10px] sm:text-xs text-muted-foreground">Ratings</div>
                     </div>
-                    <div className="p-4 bg-secondary rounded-xl text-center">
+                    <div className="p-3 sm:p-4 bg-secondary rounded-lg sm:rounded-xl text-center">
                       <motion.div
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
                       >
-                        <span className="text-2xl">❤️</span>
+                        <span className="text-xl sm:text-2xl">❤️</span>
                       </motion.div>
-                      <div className="text-2xl font-bold mt-1">{user.favorites.length}</div>
-                      <div className="text-xs text-muted-foreground">Favorites</div>
+                      <div className="text-xl sm:text-2xl font-bold mt-0.5 sm:mt-1">{user.favorites.length}</div>
+                      <div className="text-[10px] sm:text-xs text-muted-foreground">Favorites</div>
                     </div>
                   </div>
 

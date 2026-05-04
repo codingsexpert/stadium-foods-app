@@ -73,7 +73,7 @@ export default function Home() {
   }, [selectedItem, addRating])
 
   return (
-    <div className="min-h-screen bg-background pb-24 md:pb-0">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       {/* Handle URL search params for cart */}
       <Suspense fallback={null}>
         <CartParamHandler onOpenCart={handleOpenCart} />
@@ -89,15 +89,15 @@ export default function Home() {
         onOpenOrders={() => setShowOrders(true)}
       />
       
-      <main className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
+      <main className="max-w-7xl mx-auto px-2.5 sm:px-4 py-3 sm:py-4 md:py-6 space-y-3 sm:space-y-4 md:space-y-6">
         {/* Hero Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center py-4 sm:py-6"
+          className="text-center py-2 sm:py-4 md:py-6"
         >
           <motion.h1 
-            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 px-2"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1.5 sm:mb-2 px-1"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -106,26 +106,26 @@ export default function Home() {
             <span className="text-foreground">in Real-Time</span>
           </motion.h1>
           <motion.p 
-            className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto px-4"
+            className="text-xs sm:text-sm md:text-base text-muted-foreground max-w-lg mx-auto px-2 sm:px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            Discover what fans are loving right now. AI-powered recommendations just for you.
+            Discover what fans are loving. AI-powered recommendations for you.
           </motion.p>
 
           {/* Search Bar */}
           <motion.div 
-            className="max-w-md mx-auto mt-4 sm:mt-6 px-0"
+            className="max-w-md mx-auto mt-3 sm:mt-4 md:mt-6 px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
               <Input 
-                placeholder="Search food, stalls, or cuisines..."
-                className="pl-12 h-12 sm:h-14 bg-secondary border-border rounded-full text-sm sm:text-base"
+                placeholder="Search food, stalls..."
+                className="pl-9 sm:pl-12 h-10 sm:h-12 md:h-14 bg-secondary border-border rounded-full text-xs sm:text-sm md:text-base"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -137,17 +137,17 @@ export default function Home() {
         <StatsBar />
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
           {/* Food Grid - Takes 2 columns */}
           <motion.section 
-            className="lg:col-span-2 space-y-4"
+            className="lg:col-span-2 space-y-3 sm:space-y-4"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold">Explore Menu</h2>
-              <span className="text-sm text-muted-foreground">20 items available</span>
+              <h2 className="text-base sm:text-lg md:text-xl font-bold">Explore Menu</h2>
+              <span className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">20 items</span>
             </div>
             <FoodGrid onSelectItem={setSelectedItem} searchQuery={searchQuery} />
           </motion.section>

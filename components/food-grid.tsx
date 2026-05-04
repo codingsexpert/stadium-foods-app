@@ -97,14 +97,14 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
   return (
     <div className="space-y-4">
       {/* Category Filters */}
-      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+      <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-2 -mx-3 sm:-mx-4 px-3 sm:px-4 scrollbar-hide">
         {CATEGORIES.map(category => (
           <motion.button
             key={category.id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => { setSelectedCategory(category.id); setSelectedStall(null) }}
-            className={`shrink-0 flex items-center gap-1.5 px-3 py-2.5 rounded-full text-sm font-medium transition-all active:scale-95 ${
+            className={`shrink-0 flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all active:scale-95 ${
               selectedCategory === category.id
                 ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'bg-secondary hover:bg-secondary/80 active:bg-secondary/60'
@@ -114,7 +114,7 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
             {category.icon}
             <span>{category.label}</span>
             {category.id === 'favorites' && isProfileSetup && (
-              <span className="ml-1 px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[10px] font-bold">
+              <span className="ml-0.5 sm:ml-1 px-1 sm:px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[9px] sm:text-[10px] font-bold">
                 {foodItems.filter(item => isFavorite(item.id)).length}
               </span>
             )}
@@ -123,29 +123,29 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
       </div>
 
       {/* Stall Quick Filters */}
-      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+      <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-2 -mx-3 sm:-mx-4 px-3 sm:px-4 scrollbar-hide">
         {foodStalls.filter(s => s.isOpen).slice(0, 4).map(stall => (
           <motion.button
             key={stall.id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setSelectedStall(selectedStall === stall.id ? null : stall.id)}
-            className={`shrink-0 flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all active:scale-95 ${
+            className={`shrink-0 flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg sm:rounded-xl border transition-all active:scale-95 ${
               selectedStall === stall.id
                 ? 'bg-primary/20 border-primary/50 text-primary'
                 : 'bg-secondary/50 border-border hover:border-primary/30 active:bg-secondary/80'
             }`}
           >
             <div className="flex flex-col items-start">
-              <span className="text-sm font-medium">{stall.name}</span>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <MapPin className="w-3 h-3" />
+              <span className="text-xs sm:text-sm font-medium">{stall.name}</span>
+              <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs text-muted-foreground">
+                <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                 <span>{stall.section}</span>
-                <Clock className="w-3 h-3 ml-1" />
-                <span>{stall.waitTime}min</span>
+                <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3 ml-0.5 sm:ml-1" />
+                <span>{stall.waitTime}m</span>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-muted-foreground" />
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
           </motion.button>
         ))}
       </div>
@@ -186,7 +186,7 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
       ) : (
       <motion.div 
         layout
-        className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
+        className="grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4"
       >
         <AnimatePresence mode="popLayout">
           {filteredItems.map((item, index) => (

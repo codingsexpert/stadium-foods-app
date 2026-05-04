@@ -70,21 +70,21 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed right-0 top-0 bottom-0 w-full sm:max-w-md z-50 bg-background flex flex-col"
+            className="fixed right-0 top-0 bottom-0 w-full sm:max-w-md z-50 bg-background flex flex-col pb-16 md:pb-0"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border">
+            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border">
               <div className="flex items-center gap-2">
-                <ShoppingBag className="w-5 h-5 text-primary" />
-                <h2 className="text-lg font-semibold">
-                  {step === 'cart' && `Your Cart (${totalItems})`}
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                <h2 className="text-base sm:text-lg font-semibold">
+                  {step === 'cart' && `Cart (${totalItems})`}
                   {step === 'pickup' && 'Select Pickup'}
-                  {step === 'confirm' && 'Confirm Order'}
-                  {step === 'success' && 'Order Placed!'}
+                  {step === 'confirm' && 'Confirm'}
+                  {step === 'success' && 'Placed!'}
                 </h2>
               </div>
-              <Button variant="ghost" size="icon" onClick={handleClose}>
-                <X className="w-5 h-5" />
+              <Button variant="ghost" size="icon" onClick={handleClose} className="w-8 h-8 sm:w-9 sm:h-9">
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
 
@@ -98,13 +98,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="p-4 space-y-4"
+                    className="p-3 sm:p-4 space-y-3 sm:space-y-4"
                   >
                     {items.length === 0 ? (
-                      <div className="text-center py-12">
-                        <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-                        <h3 className="font-semibold mb-1">Your cart is empty</h3>
-                        <p className="text-sm text-muted-foreground">Add some delicious items!</p>
+                      <div className="text-center py-8 sm:py-12">
+                        <ShoppingBag className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-muted-foreground mb-3 sm:mb-4" />
+                        <h3 className="font-semibold mb-1 text-sm sm:text-base">Your cart is empty</h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground">Add some delicious items!</p>
                       </div>
                     ) : (
                       <>
@@ -114,45 +114,45 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.05 }}
-                            className="flex gap-3 p-3 rounded-xl bg-secondary/30 border border-border"
+                            className="flex gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-secondary/30 border border-border"
                           >
                             <img
                               src={cartItem.item.image}
                               alt={cartItem.item.name}
-                              className="w-20 h-20 rounded-lg object-cover object-center shrink-0"
+                              className="w-16 h-16 sm:w-20 sm:h-20 rounded-md sm:rounded-lg object-cover object-center shrink-0"
                             />
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-medium truncate">{cartItem.item.name}</h4>
-                              <p className="text-xs text-muted-foreground">{cartItem.item.stallName}</p>
-                              <p className="font-semibold mt-1">Rs.{cartItem.item.price}</p>
+                              <h4 className="font-medium truncate text-sm sm:text-base">{cartItem.item.name}</h4>
+                              <p className="text-[10px] sm:text-xs text-muted-foreground truncate">{cartItem.item.stallName}</p>
+                              <p className="font-semibold mt-0.5 sm:mt-1 text-sm sm:text-base">Rs.{cartItem.item.price}</p>
 
-                              <div className="flex items-center justify-between mt-2">
-                                <div className="flex items-center gap-2">
+                              <div className="flex items-center justify-between mt-1.5 sm:mt-2">
+                                <div className="flex items-center gap-1.5 sm:gap-2">
                                   <Button
                                     size="icon"
                                     variant="outline"
-                                    className="w-7 h-7"
+                                    className="w-6 h-6 sm:w-7 sm:h-7"
                                     onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity - 1)}
                                   >
-                                    <Minus className="w-3 h-3" />
+                                    <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                   </Button>
-                                  <span className="w-6 text-center font-medium">{cartItem.quantity}</span>
+                                  <span className="w-5 sm:w-6 text-center font-medium text-xs sm:text-sm">{cartItem.quantity}</span>
                                   <Button
                                     size="icon"
                                     variant="outline"
-                                    className="w-7 h-7"
+                                    className="w-6 h-6 sm:w-7 sm:h-7"
                                     onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity + 1)}
                                   >
-                                    <Plus className="w-3 h-3" />
+                                    <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                   </Button>
                                 </div>
                                 <Button
                                   size="icon"
                                   variant="ghost"
-                                  className="w-7 h-7 text-destructive"
+                                  className="w-6 h-6 sm:w-7 sm:h-7 text-destructive"
                                   onClick={() => removeFromCart(cartItem.item.id)}
                                 >
-                                  <Trash2 className="w-4 h-4" />
+                                  <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                 </Button>
                               </div>
                             </div>
@@ -288,32 +288,32 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
             {/* Footer */}
             {step !== 'success' && items.length > 0 && (
-              <div className="p-4 border-t border-border bg-background">
+              <div className="p-3 sm:p-4 border-t border-border bg-background">
                 {step === 'cart' && (
                   <>
-                    <div className="flex justify-between mb-3">
-                      <span className="text-muted-foreground">Subtotal</span>
-                      <span className="font-semibold">Rs.{totalAmount}</span>
+                    <div className="flex justify-between mb-2 sm:mb-3">
+                      <span className="text-sm sm:text-base text-muted-foreground">Subtotal</span>
+                      <span className="font-semibold text-sm sm:text-base">Rs.{totalAmount}</span>
                     </div>
-                    <Button className="w-full h-12" onClick={handleCheckout}>
-                      Proceed to Checkout
-                      <ChevronRight className="w-4 h-4 ml-2" />
+                    <Button className="w-full h-10 sm:h-12 text-sm" onClick={handleCheckout}>
+                      Checkout
+                      <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   </>
                 )}
 
                 {step === 'pickup' && (
-                  <Button variant="outline" className="w-full" onClick={() => setStep('cart')}>
+                  <Button variant="outline" className="w-full h-10 sm:h-11 text-sm" onClick={() => setStep('cart')}>
                     Back to Cart
                   </Button>
                 )}
 
                 {step === 'confirm' && (
                   <div className="space-y-2">
-                    <Button className="w-full h-12" onClick={handlePlaceOrder}>
+                    <Button className="w-full h-10 sm:h-12 text-sm" onClick={handlePlaceOrder}>
                       Place Order - Rs.{totalAmount}
                     </Button>
-                    <Button variant="outline" className="w-full" onClick={() => setStep('pickup')}>
+                    <Button variant="outline" className="w-full h-9 sm:h-10 text-sm" onClick={() => setStep('pickup')}>
                       Change Pickup
                     </Button>
                   </div>
@@ -322,8 +322,8 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             )}
 
             {step === 'success' && (
-              <div className="p-4 border-t border-border">
-                <Button className="w-full" onClick={handleClose}>
+              <div className="p-3 sm:p-4 border-t border-border">
+                <Button className="w-full h-10 sm:h-11" onClick={handleClose}>
                   Done
                 </Button>
               </div>

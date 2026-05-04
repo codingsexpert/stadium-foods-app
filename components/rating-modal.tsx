@@ -65,10 +65,10 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             onClick={e => e.stopPropagation()}
-            className="w-full max-w-lg glass-card rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] overflow-y-auto"
+            className="w-full max-w-lg glass-card rounded-t-2xl sm:rounded-t-3xl md:rounded-3xl overflow-hidden max-h-[85vh] sm:max-h-[90vh] overflow-y-auto"
           >
             {/* Header Image */}
-            <div className="relative h-40">
+            <div className="relative h-32 sm:h-40">
               <img 
                 src={item.image} 
                 alt={item.name}
@@ -77,21 +77,21 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
-              <div className="absolute bottom-4 left-4 right-4">
-                <h2 className="text-xl font-bold">{item.name}</h2>
-                <p className="text-sm text-muted-foreground">{item.stallName}</p>
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4">
+                <h2 className="text-lg sm:text-xl font-bold">{item.name}</h2>
+                <p className="text-xs sm:text-sm text-muted-foreground">{item.stallName}</p>
               </div>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               {/* Star Rating */}
               <div className="text-center">
-                <p className="text-sm text-muted-foreground mb-3">How was your experience?</p>
-                <div className="flex items-center justify-center gap-2">
+                <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">How was your experience?</p>
+                <div className="flex items-center justify-center gap-1 sm:gap-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <motion.button
                       key={star}
@@ -100,10 +100,10 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
                       onMouseEnter={() => setHoveredRating(star)}
                       onMouseLeave={() => setHoveredRating(0)}
                       onClick={() => setRating(star)}
-                      className="p-1"
+                      className="p-0.5 sm:p-1"
                     >
                       <Star 
-                        className={`w-10 h-10 transition-colors ${
+                        className={`w-8 h-8 sm:w-10 sm:h-10 transition-colors ${
                           star <= displayRating 
                             ? 'fill-primary text-primary' 
                             : 'text-muted hover:text-muted-foreground'
@@ -116,7 +116,7 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-sm font-medium mt-2"
+                    className="text-xs sm:text-sm font-medium mt-1.5 sm:mt-2"
                   >
                     {displayRating === 5 ? 'Amazing!' : 
                      displayRating === 4 ? 'Great!' :
@@ -127,26 +127,26 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
               </div>
 
               {/* Review Input */}
-              <div className="space-y-2">
+              <div className="space-y-1.5 sm:space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">Write a review (optional)</label>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Sparkles className="w-3 h-3 text-primary" />
-                    AI-powered analysis
+                  <label className="text-xs sm:text-sm font-medium">Review (optional)</label>
+                  <div className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-xs text-muted-foreground">
+                    <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
+                    AI analysis
                   </div>
                 </div>
                 <Textarea 
-                  placeholder="Share your thoughts about this food..."
+                  placeholder="Share your thoughts..."
                   value={review}
                   onChange={(e) => setReview(e.target.value)}
-                  rows={3}
-                  className="resize-none bg-secondary border-border"
+                  rows={2}
+                  className="resize-none bg-secondary border-border text-sm"
                 />
               </div>
 
               {/* Photo Upload Button */}
-              <Button variant="outline" className="w-full gap-2 border-dashed">
-                <Camera className="w-4 h-4" />
+              <Button variant="outline" className="w-full gap-1.5 sm:gap-2 border-dashed h-9 sm:h-10 text-xs sm:text-sm">
+                <Camera className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 Add Photo
               </Button>
 
@@ -181,19 +181,19 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
 
               {/* Submit Button */}
               <Button 
-                className="w-full gap-2" 
-                size="lg"
+                className="w-full gap-1.5 sm:gap-2 h-10 sm:h-11 text-sm" 
                 disabled={rating === 0 || isSubmitting}
                 onClick={handleSubmit}
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Analyzing with AI...
+                    <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
+                    <span className="hidden sm:inline">Analyzing with AI...</span>
+                    <span className="sm:hidden">Analyzing...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
+                    <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     Submit Rating
                   </>
                 )}

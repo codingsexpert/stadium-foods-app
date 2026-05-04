@@ -39,18 +39,18 @@ export function Header({
         animate={{ y: 0, opacity: 1 }}
         className="sticky top-0 z-50 glass-card"
       >
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
             <motion.div 
-              className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/20 flex items-center justify-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Utensils className="w-5 h-5 text-primary" />
+              <Utensils className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
             </motion.div>
             <div>
-              <h1 className="font-bold text-lg tracking-tight">StadiumBite</h1>
-              <p className="text-xs text-muted-foreground">Live Food Ratings</p>
+              <h1 className="font-bold text-base sm:text-lg tracking-tight">StadiumBite</h1>
+              <p className="text-[10px] sm:text-xs text-muted-foreground hidden xs:block">Live Food Ratings</p>
             </div>
           </div>
 
@@ -128,16 +128,16 @@ export function Header({
           </div>
 
           {/* Mobile Controls */}
-          <div className="flex md:hidden items-center gap-0.5">
+          <div className="flex md:hidden items-center gap-0">
             {/* Mobile Notification */}
             <motion.button
               onClick={onOpenNotifications}
               whileTap={{ scale: 0.95 }}
-              className="relative p-2.5 rounded-full hover:bg-secondary active:bg-secondary/80 transition-colors"
+              className="relative p-2 rounded-full hover:bg-secondary active:bg-secondary/80 transition-colors"
             >
-              <Bell className="w-5 h-5" />
+              <Bell className="w-[18px] h-[18px] sm:w-5 sm:h-5" />
               {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-destructive text-destructive-foreground text-[10px] flex items-center justify-center font-bold">
+                <span className="absolute top-0.5 right-0.5 min-w-[14px] h-3.5 px-0.5 rounded-full bg-destructive text-destructive-foreground text-[9px] flex items-center justify-center font-bold">
                   {unreadCount > 9 ? '9+' : unreadCount}
                 </span>
               )}
@@ -147,11 +147,11 @@ export function Header({
             <motion.button
               onClick={onOpenCart}
               whileTap={{ scale: 0.95 }}
-              className="relative p-2.5 rounded-full hover:bg-secondary active:bg-secondary/80 transition-colors"
+              className="relative p-2 rounded-full hover:bg-secondary active:bg-secondary/80 transition-colors"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingCart className="w-[18px] h-[18px] sm:w-5 sm:h-5" />
               {totalItems > 0 && (
-                <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+                <span className="absolute top-0.5 right-0.5 min-w-[14px] h-3.5 px-0.5 rounded-full bg-primary text-primary-foreground text-[9px] flex items-center justify-center font-bold">
                   {totalItems > 9 ? '9+' : totalItems}
                 </span>
               )}
@@ -162,9 +162,9 @@ export function Header({
               variant="ghost" 
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-full ml-0.5"
+              className="rounded-full ml-0 w-8 h-8 sm:w-9 sm:h-9"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
             </Button>
           </div>
         </div>

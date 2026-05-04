@@ -61,16 +61,16 @@ export function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
           className="fixed inset-0 bottom-16 md:bottom-0 z-50 bg-background/95 backdrop-blur-sm overflow-hidden flex flex-col"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
+          <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border shrink-0">
             <div className="flex items-center gap-2">
-              <Trophy className="w-6 h-6 text-primary" />
+              <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               <div>
-                <h2 className="text-xl font-bold">Leaderboard</h2>
-                <p className="text-sm text-muted-foreground">Top Food Critics</p>
+                <h2 className="text-lg sm:text-xl font-bold">Leaderboard</h2>
+                <p className="text-xs sm:text-sm text-muted-foreground">Top Food Critics</p>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="w-5 h-5" />
+            <Button variant="ghost" size="icon" onClick={onClose} className="w-8 h-8 sm:w-9 sm:h-9">
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           </div>
 
@@ -96,7 +96,7 @@ export function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
           </div>
 
           {/* Top 3 Podium */}
-          <div className="flex items-end justify-center gap-4 py-6 px-4 shrink-0">
+          <div className="flex items-end justify-center gap-3 sm:gap-4 py-4 sm:py-6 px-3 sm:px-4 shrink-0">
             {/* Second Place */}
             <motion.div
               initial={{ y: 50, opacity: 0 }}
@@ -108,35 +108,35 @@ export function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
                 <img 
                   src={sortedUsers[1]?.avatar} 
                   alt={sortedUsers[1]?.name}
-                  className="w-16 h-16 rounded-full border-4 border-gray-400"
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-[3px] sm:border-4 border-gray-400"
                 />
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center text-white font-bold text-sm">
+                <div className="absolute -bottom-1.5 sm:-bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gray-400 flex items-center justify-center text-white font-bold text-xs sm:text-sm">
                   2
                 </div>
               </div>
-              <p className="text-sm font-medium mt-3 text-center">{sortedUsers[1]?.name.split(' ')[0]}</p>
-              <p className="text-xs text-muted-foreground">{getPoints(sortedUsers[1])} pts</p>
+              <p className="text-xs sm:text-sm font-medium mt-2 sm:mt-3 text-center">{sortedUsers[1]?.name.split(' ')[0]}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">{getPoints(sortedUsers[1])} pts</p>
             </motion.div>
 
             {/* First Place */}
             <motion.div
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="flex flex-col items-center -mt-4"
+              className="flex flex-col items-center -mt-3 sm:-mt-4"
             >
-              <Crown className="w-8 h-8 text-yellow-500 mb-1" />
+              <Crown className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-500 mb-0.5 sm:mb-1" />
               <div className="relative">
                 <img 
                   src={sortedUsers[0]?.avatar} 
                   alt={sortedUsers[0]?.name}
-                  className="w-20 h-20 rounded-full border-4 border-yellow-500"
+                  className="w-14 h-14 sm:w-20 sm:h-20 rounded-full border-[3px] sm:border-4 border-yellow-500"
                 />
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold text-sm">
+                <div className="absolute -bottom-1.5 sm:-bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold text-xs sm:text-sm">
                   1
                 </div>
               </div>
-              <p className="text-sm font-semibold mt-3 text-center">{sortedUsers[0]?.name.split(' ')[0]}</p>
-              <p className="text-xs text-primary font-medium">{getPoints(sortedUsers[0])} pts</p>
+              <p className="text-xs sm:text-sm font-semibold mt-2 sm:mt-3 text-center">{sortedUsers[0]?.name.split(' ')[0]}</p>
+              <p className="text-[10px] sm:text-xs text-primary font-medium">{getPoints(sortedUsers[0])} pts</p>
             </motion.div>
 
             {/* Third Place */}
@@ -150,56 +150,56 @@ export function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
                 <img 
                   src={sortedUsers[2]?.avatar} 
                   alt={sortedUsers[2]?.name}
-                  className="w-16 h-16 rounded-full border-4 border-amber-600"
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-[3px] sm:border-4 border-amber-600"
                 />
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-sm">
+                <div className="absolute -bottom-1.5 sm:-bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-xs sm:text-sm">
                   3
                 </div>
               </div>
-              <p className="text-sm font-medium mt-3 text-center">{sortedUsers[2]?.name.split(' ')[0]}</p>
-              <p className="text-xs text-muted-foreground">{getPoints(sortedUsers[2])} pts</p>
+              <p className="text-xs sm:text-sm font-medium mt-2 sm:mt-3 text-center">{sortedUsers[2]?.name.split(' ')[0]}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">{getPoints(sortedUsers[2])} pts</p>
             </motion.div>
           </div>
 
           {/* Rankings List */}
-          <div className="flex-1 overflow-y-auto px-4 pb-24">
-            <div className="space-y-2">
+          <div className="flex-1 overflow-y-auto px-3 sm:px-4 pb-24">
+            <div className="space-y-1.5 sm:space-y-2">
               {sortedUsers.slice(3).map((user, index) => (
                 <motion.div
                   key={user.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-secondary/30 border border-border"
+                  className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-secondary/30 border border-border"
                 >
-                  <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center font-bold text-sm">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-muted flex items-center justify-center font-bold text-xs sm:text-sm">
                     {user.rank}
                   </div>
 
                   <img 
                     src={user.avatar}
                     alt={user.name}
-                    className="w-10 h-10 rounded-full"
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
                   />
 
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium truncate">{user.name}</p>
+                    <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+                      <p className="font-medium truncate text-xs sm:text-sm">{user.name}</p>
                       <Badge 
                         variant="outline" 
-                        className={`text-[10px] ${BADGE_COLORS[user.badge]}`}
+                        className={`text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0 ${BADGE_COLORS[user.badge]}`}
                       >
                         {user.badge}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">
                       {user.totalReviews} reviews
                     </p>
                   </div>
 
-                  <div className="text-right">
-                    <p className="font-bold">{getPoints(user)}</p>
-                    <p className="text-xs text-muted-foreground">points</p>
+                  <div className="text-right shrink-0">
+                    <p className="font-bold text-xs sm:text-sm">{getPoints(user)}</p>
+                    <p className="text-[9px] sm:text-xs text-muted-foreground">pts</p>
                   </div>
                 </motion.div>
               ))}

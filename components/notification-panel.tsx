@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Bell, BellOff, Tag, Package, Star, Info, CheckCheck, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -51,28 +52,28 @@ function NotificationCard({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className={`p-4 rounded-xl border transition-colors ${
+      className={`p-3 sm:p-4 rounded-lg sm:rounded-xl border transition-colors ${
         notification.read 
           ? 'bg-secondary/20 border-border' 
           : `${config.bgColor} border-transparent`
       }`}
       onClick={() => !notification.read && onMarkAsRead(notification.id)}
     >
-      <div className="flex gap-3">
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${config.color}`}>
-          {config.icon}
+      <div className="flex gap-2.5 sm:gap-3">
+        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 ${config.color}`}>
+          {React.cloneElement(config.icon as React.ReactElement, { className: 'w-3.5 h-3.5 sm:w-4 sm:h-4' })}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
-            <p className={`font-medium ${notification.read ? 'text-muted-foreground' : ''}`}>
+          <div className="flex items-start justify-between gap-1 sm:gap-2">
+            <p className={`font-medium text-sm sm:text-base ${notification.read ? 'text-muted-foreground' : ''}`}>
               {notification.title}
             </p>
             {!notification.read && (
-              <span className="w-2 h-2 rounded-full bg-primary shrink-0 mt-2" />
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary shrink-0 mt-1.5 sm:mt-2" />
             )}
           </div>
-          <p className="text-sm text-muted-foreground mt-0.5">{notification.message}</p>
-          <p className="text-xs text-muted-foreground mt-2">{timeAgo}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">{notification.message}</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground mt-1.5 sm:mt-2">{timeAgo}</p>
         </div>
       </div>
     </motion.div>
@@ -118,28 +119,28 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed right-0 top-0 bottom-16 md:bottom-0 w-full sm:max-w-md z-50 bg-background flex flex-col"
+            className="fixed right-0 top-0 bottom-0 w-full sm:max-w-md z-50 bg-background flex flex-col pb-16 md:pb-0"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border">
+            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border">
               <div className="flex items-center gap-2">
-                <Bell className="w-5 h-5 text-primary" />
+                <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 <div>
-                  <h2 className="text-lg font-semibold">Notifications</h2>
+                  <h2 className="text-base sm:text-lg font-semibold">Notifications</h2>
                   {unreadCount > 0 && (
-                    <p className="text-xs text-muted-foreground">{unreadCount} unread</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">{unreadCount} unread</p>
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 {unreadCount > 0 && (
-                  <Button variant="ghost" size="sm" onClick={markAllAsRead}>
-                    <CheckCheck className="w-4 h-4 mr-1" />
-                    Mark all read
+                  <Button variant="ghost" size="sm" onClick={markAllAsRead} className="text-xs h-8 px-2 sm:px-3">
+                    <CheckCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+                    <span className="hidden sm:inline">Mark all</span>
                   </Button>
                 )}
-                <Button variant="ghost" size="icon" onClick={onClose}>
-                  <X className="w-5 h-5" />
+                <Button variant="ghost" size="icon" onClick={onClose} className="w-8 h-8 sm:w-9 sm:h-9">
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </div>
             </div>

@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Package, Clock, CheckCircle, ChefHat, Truck, MapPin, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -50,58 +51,58 @@ function OrderCard({ order }: { order: Order }) {
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="p-4 rounded-2xl bg-secondary/30 border border-border"
+      className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-secondary/30 border border-border"
     >
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between mb-2 sm:mb-3">
         <div>
-          <p className="font-mono text-xs text-muted-foreground">{order.id}</p>
-          <p className="text-xs text-muted-foreground mt-0.5">{timeAgo}</p>
+          <p className="font-mono text-[10px] sm:text-xs text-muted-foreground">{order.id}</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">{timeAgo}</p>
         </div>
-        <Badge className={`${statusConfig.color} gap-1`}>
-          {statusConfig.icon}
+        <Badge className={`${statusConfig.color} gap-0.5 sm:gap-1 text-[10px] sm:text-xs px-1.5 sm:px-2`}>
+          {React.cloneElement(statusConfig.icon as React.ReactElement, { className: 'w-3 h-3 sm:w-4 sm:h-4' })}
           {statusConfig.label}
         </Badge>
       </div>
 
-      <div className="space-y-2 mb-3">
+      <div className="space-y-1.5 sm:space-y-2 mb-2 sm:mb-3">
         {order.items.slice(0, 2).map(item => (
           <div key={item.item.id} className="flex items-center gap-2">
             <img
               src={item.item.image}
               alt={item.item.name}
-              className="w-10 h-10 rounded-lg object-cover object-center shrink-0 bg-muted"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-md sm:rounded-lg object-cover object-center shrink-0 bg-muted"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{item.item.name}</p>
-              <p className="text-xs text-muted-foreground">x{item.quantity}</p>
+              <p className="text-xs sm:text-sm font-medium truncate">{item.item.name}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">x{item.quantity}</p>
             </div>
-            <span className="text-sm">Rs.{item.item.price * item.quantity}</span>
+            <span className="text-xs sm:text-sm">Rs.{item.item.price * item.quantity}</span>
           </div>
         ))}
         {order.items.length > 2 && (
-          <p className="text-xs text-muted-foreground">
-            +{order.items.length - 2} more items
+          <p className="text-[10px] sm:text-xs text-muted-foreground">
+            +{order.items.length - 2} more
           </p>
         )}
       </div>
 
-      <div className="flex items-center justify-between pt-3 border-t border-border">
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-          <MapPin className="w-3 h-3" />
-          <span className="truncate max-w-[150px]">{order.pickupLocation}</span>
+      <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-border">
+        <div className="flex items-center gap-1 text-[10px] sm:text-xs text-muted-foreground">
+          <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+          <span className="truncate max-w-[100px] sm:max-w-[150px]">{order.pickupLocation}</span>
         </div>
-        <span className="font-semibold">Rs.{order.totalAmount}</span>
+        <span className="font-semibold text-xs sm:text-sm">Rs.{order.totalAmount}</span>
       </div>
 
       {order.status === 'ready' && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-3 p-3 rounded-xl bg-green-500/10 border border-green-500/20"
+          className="mt-2 sm:mt-3 p-2 sm:p-3 rounded-lg sm:rounded-xl bg-green-500/10 border border-green-500/20"
         >
-          <div className="flex items-center gap-2 text-green-600">
-            <CheckCircle className="w-4 h-4" />
-            <span className="text-sm font-medium">Ready for pickup!</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-green-600">
+            <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="text-xs sm:text-sm font-medium">Ready for pickup!</span>
           </div>
         </motion.div>
       )}
@@ -110,13 +111,13 @@ function OrderCard({ order }: { order: Order }) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-3 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20"
+          className="mt-2 sm:mt-3 p-2 sm:p-3 rounded-lg sm:rounded-xl bg-orange-500/10 border border-orange-500/20"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <div className="animate-spin">
-              <ChefHat className="w-4 h-4 text-orange-500" />
+              <ChefHat className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500" />
             </div>
-            <span className="text-sm">Being prepared...</span>
+            <span className="text-xs sm:text-sm">Being prepared...</span>
           </div>
         </motion.div>
       )}
@@ -149,16 +150,16 @@ export function OrderHistory({ isOpen, onClose }: OrderHistoryProps) {
           className="fixed inset-0 bottom-16 md:bottom-0 z-50 bg-background/95 backdrop-blur-sm overflow-hidden flex flex-col"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
+          <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border shrink-0">
             <div className="flex items-center gap-2">
-              <Package className="w-5 h-5 text-primary" />
+              <Package className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               <div>
-                <h2 className="text-lg font-semibold">Order History</h2>
-                <p className="text-xs text-muted-foreground">{orders.length} orders</p>
+                <h2 className="text-base sm:text-lg font-semibold">Orders</h2>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">{orders.length} total</p>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="w-5 h-5" />
+            <Button variant="ghost" size="icon" onClick={onClose} className="w-8 h-8 sm:w-9 sm:h-9">
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           </div>
 
