@@ -55,7 +55,7 @@ export function StadiumMap({ isOpen, onClose }: StadiumMapProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm"
+          className="fixed inset-0 bottom-16 md:bottom-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">

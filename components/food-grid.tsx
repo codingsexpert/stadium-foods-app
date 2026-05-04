@@ -97,24 +97,24 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
   return (
     <div className="space-y-4">
       {/* Category Filters */}
-      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
         {CATEGORIES.map(category => (
           <motion.button
             key={category.id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => { setSelectedCategory(category.id); setSelectedStall(null) }}
-            className={`shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium transition-all ${
+            className={`shrink-0 flex items-center gap-1.5 px-3 py-2.5 rounded-full text-sm font-medium transition-all active:scale-95 ${
               selectedCategory === category.id
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary hover:bg-secondary/80'
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'bg-secondary hover:bg-secondary/80 active:bg-secondary/60'
             } ${category.id === 'favorites' && !isProfileSetup ? 'opacity-50' : ''}`}
             disabled={category.id === 'favorites' && !isProfileSetup}
           >
             {category.icon}
             <span>{category.label}</span>
             {category.id === 'favorites' && isProfileSetup && (
-              <span className="ml-1 px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[10px]">
+              <span className="ml-1 px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[10px] font-bold">
                 {foodItems.filter(item => isFavorite(item.id)).length}
               </span>
             )}
@@ -123,17 +123,17 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
       </div>
 
       {/* Stall Quick Filters */}
-      <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
         {foodStalls.filter(s => s.isOpen).slice(0, 4).map(stall => (
           <motion.button
             key={stall.id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setSelectedStall(selectedStall === stall.id ? null : stall.id)}
-            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl border transition-all ${
+            className={`shrink-0 flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all active:scale-95 ${
               selectedStall === stall.id
                 ? 'bg-primary/20 border-primary/50 text-primary'
-                : 'bg-secondary/50 border-border hover:border-primary/30'
+                : 'bg-secondary/50 border-border hover:border-primary/30 active:bg-secondary/80'
             }`}
           >
             <div className="flex flex-col items-start">

@@ -60,7 +60,7 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md md:w-full bg-card rounded-2xl shadow-xl z-50 overflow-hidden flex flex-col max-h-[90vh]"
+            className="fixed inset-3 bottom-20 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md md:w-full bg-card rounded-2xl shadow-xl z-50 overflow-hidden flex flex-col md:max-h-[90vh]"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">

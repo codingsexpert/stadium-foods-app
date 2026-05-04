@@ -58,7 +58,7 @@ export function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm overflow-hidden flex flex-col"
+          className="fixed inset-0 bottom-16 md:bottom-0 z-50 bg-background/95 backdrop-blur-sm overflow-hidden flex flex-col"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
@@ -75,21 +75,22 @@ export function Leaderboard({ isOpen, onClose }: LeaderboardProps) {
           </div>
 
           {/* Time Filter */}
-          <div className="flex items-center gap-2 p-4 border-b border-border shrink-0">
+          <div className="flex items-center gap-2 p-4 border-b border-border shrink-0 overflow-x-auto scrollbar-hide">
             {[
-              { id: 'weekly', label: 'This Week', icon: <Calendar className="w-3.5 h-3.5" /> },
-              { id: 'monthly', label: 'This Month', icon: <TrendingUp className="w-3.5 h-3.5" /> },
-              { id: 'allTime', label: 'All Time', icon: <Trophy className="w-3.5 h-3.5" /> }
+              { id: 'weekly', label: 'Week', fullLabel: 'This Week', icon: <Calendar className="w-3.5 h-3.5" /> },
+              { id: 'monthly', label: 'Month', fullLabel: 'This Month', icon: <TrendingUp className="w-3.5 h-3.5" /> },
+              { id: 'allTime', label: 'All Time', fullLabel: 'All Time', icon: <Trophy className="w-3.5 h-3.5" /> }
             ].map(filter => (
               <Button
                 key={filter.id}
                 variant={timeFilter === filter.id ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setTimeFilter(filter.id as TimeFilter)}
-                className="gap-1.5"
+                className="gap-1.5 shrink-0"
               >
                 {filter.icon}
-                {filter.label}
+                <span className="hidden sm:inline">{filter.fullLabel}</span>
+                <span className="sm:hidden">{filter.label}</span>
               </Button>
             ))}
           </div>

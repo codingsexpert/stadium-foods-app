@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, MapPin, Clock, Star, Plus, Minus, ChevronRight, Flame, Leaf, ShoppingCart, Heart } from 'lucide-react'
+import { ArrowLeft, MapPin, Clock, Star, Plus, Minus, ChevronRight, Flame, Leaf, ShoppingCart, Heart, Home } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { foodStalls, foodItems, recentReviews } from '@/lib/data'
@@ -56,7 +56,7 @@ export default function StallPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-24 md:pb-0">
       {/* Header */}
       <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800')] bg-cover bg-center opacity-20" />
@@ -248,18 +248,53 @@ export default function StallPage() {
         <motion.div
           initial={{ y: 100 }}
           animate={{ y: 0 }}
-          className="fixed bottom-4 left-4 right-4 z-50"
+          className="fixed bottom-20 md:bottom-4 left-4 right-4 z-40"
         >
           <Button
-            className="w-full h-14 rounded-2xl shadow-lg gap-2"
+            className="w-full h-12 md:h-14 rounded-2xl shadow-lg gap-2"
             onClick={() => router.push('/?cart=open')}
           >
             <ShoppingCart className="w-5 h-5" />
-            <span>View Cart ({items.reduce((sum, i) => sum + i.quantity, 0)} items)</span>
+            <span className="text-sm md:text-base">View Cart ({items.reduce((sum, i) => sum + i.quantity, 0)} items)</span>
             <ChevronRight className="w-4 h-4 ml-auto" />
           </Button>
         </motion.div>
       )}
+
+      {/* Simple Bottom Nav for stall page */}
+      <motion.nav
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        className="fixed bottom-0 left-0 right-0 md:hidden z-30 bg-background/95 backdrop-blur-md border-t border-border"
+      >
+        <div className="flex items-center justify-around px-4 py-2 pb-[env(safe-area-inset-bottom,8px)]">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex flex-col items-center gap-0.5 h-auto py-2"
+            onClick={() => router.push('/')}
+          >
+            <Home className="w-5 h-5" />
+            <span className="text-[10px]">Home</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex flex-col items-center gap-0.5 h-auto py-2"
+            onClick={() => router.push('/?cart=open')}
+          >
+            <div className="relative">
+              <ShoppingCart className="w-5 h-5" />
+              {items.length > 0 && (
+                <span className="absolute -top-1.5 -right-2 min-w-[16px] h-4 px-1 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+                  {items.reduce((sum, i) => sum + i.quantity, 0)}
+                </span>
+              )}
+            </div>
+            <span className="text-[10px]">Cart</span>
+          </Button>
+        </div>
+      </motion.nav>
     </div>
   )
 }

@@ -73,7 +73,7 @@ export default function Home() {
   }, [selectedItem, addRating])
 
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
+    <div className="min-h-screen bg-background pb-24 md:pb-0">
       {/* Handle URL search params for cart */}
       <Suspense fallback={null}>
         <CartParamHandler onOpenCart={handleOpenCart} />
@@ -89,15 +89,15 @@ export default function Home() {
         onOpenOrders={() => setShowOrders(true)}
       />
       
-      <main className="max-w-7xl mx-auto px-4 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {/* Hero Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center py-6"
+          className="text-center py-4 sm:py-6"
         >
           <motion.h1 
-            className="text-3xl md:text-4xl font-bold mb-2"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 px-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -106,7 +106,7 @@ export default function Home() {
             <span className="text-foreground">in Real-Time</span>
           </motion.h1>
           <motion.p 
-            className="text-muted-foreground max-w-lg mx-auto"
+            className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -116,7 +116,7 @@ export default function Home() {
 
           {/* Search Bar */}
           <motion.div 
-            className="max-w-md mx-auto mt-6"
+            className="max-w-md mx-auto mt-4 sm:mt-6 px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -125,7 +125,7 @@ export default function Home() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input 
                 placeholder="Search food, stalls, or cuisines..."
-                className="pl-12 py-6 bg-secondary border-border rounded-full text-base"
+                className="pl-12 h-12 sm:h-14 bg-secondary border-border rounded-full text-sm sm:text-base"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

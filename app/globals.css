@@ -210,3 +210,43 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
+
+/* Hide scrollbar for horizontal scroll areas */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area insets for notched devices */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Improve touch interactions */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent overscroll on modals */
+.modal-open {
+  overflow: hidden;
+}
+
+/* Better focus states for accessibility */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}

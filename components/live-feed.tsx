@@ -63,7 +63,7 @@ export function LiveFeed() {
         </button>
       </div>
 
-      <div className="p-4 max-h-[500px] overflow-y-auto">
+      <div className="p-3 sm:p-4 max-h-[350px] sm:max-h-[450px] lg:max-h-[500px] overflow-y-auto">
         <AnimatePresence mode="wait">
           {activeTab === 'live' ? (
             <motion.div

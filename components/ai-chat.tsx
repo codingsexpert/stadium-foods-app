@@ -35,16 +35,16 @@ export function AIChat() {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Button - Positioned above mobile nav */}
       <motion.button
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25 flex items-center justify-center z-40 ${isOpen ? 'hidden' : ''}`}
+        className={`fixed bottom-20 md:bottom-6 right-4 md:right-6 w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25 flex items-center justify-center z-30 ${isOpen ? 'hidden' : ''}`}
       >
-        <Sparkles className="w-6 h-6" />
+        <Sparkles className="w-5 h-5 md:w-6 md:h-6" />
       </motion.button>
 
       {/* Chat Window */}
@@ -63,7 +63,7 @@ export function AIChat() {
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="fixed inset-4 md:inset-auto md:bottom-6 md:right-6 md:w-[380px] md:max-h-[600px] glass-card rounded-2xl overflow-hidden shadow-2xl z-50 flex flex-col"
+              className="fixed inset-3 bottom-20 md:inset-auto md:bottom-6 md:right-6 md:w-[380px] md:max-h-[600px] glass-card rounded-2xl overflow-hidden shadow-2xl z-50 flex flex-col"
             >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border bg-primary/5">

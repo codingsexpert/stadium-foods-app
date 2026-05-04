@@ -128,17 +128,17 @@ export function Header({
           </div>
 
           {/* Mobile Controls */}
-          <div className="flex md:hidden items-center gap-1">
+          <div className="flex md:hidden items-center gap-0.5">
             {/* Mobile Notification */}
             <motion.button
               onClick={onOpenNotifications}
               whileTap={{ scale: 0.95 }}
-              className="relative p-2 rounded-full"
+              className="relative p-2.5 rounded-full hover:bg-secondary active:bg-secondary/80 transition-colors"
             >
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-destructive text-destructive-foreground text-[10px] flex items-center justify-center font-medium">
-                  {unreadCount}
+                <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-destructive text-destructive-foreground text-[10px] flex items-center justify-center font-bold">
+                  {unreadCount > 9 ? '9+' : unreadCount}
                 </span>
               )}
             </motion.button>
@@ -147,12 +147,12 @@ export function Header({
             <motion.button
               onClick={onOpenCart}
               whileTap={{ scale: 0.95 }}
-              className="relative p-2 rounded-full"
+              className="relative p-2.5 rounded-full hover:bg-secondary active:bg-secondary/80 transition-colors"
             >
               <ShoppingCart className="w-5 h-5" />
               {totalItems > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-medium">
-                  {totalItems}
+                <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+                  {totalItems > 9 ? '9+' : totalItems}
                 </span>
               )}
             </motion.button>
@@ -162,7 +162,7 @@ export function Header({
               variant="ghost" 
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-full"
+              className="rounded-full ml-0.5"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
@@ -178,8 +178,8 @@ export function Header({
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden border-t border-border overflow-hidden"
             >
-              <div className="p-4 space-y-3">
-                <div className="flex items-center justify-between">
+              <div className="p-4 space-y-2">
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/20 border border-accent/30">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
@@ -192,26 +192,26 @@ export function Header({
 
                 <button 
                   onClick={() => { onOpenLeaderboard(); setMobileMenuOpen(false) }}
-                  className="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-secondary text-left"
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 active:bg-secondary/60 transition-colors text-left"
                 >
-                  <Trophy className="w-4 h-4 text-primary" />
+                  <Trophy className="w-5 h-5 text-primary" />
                   <span className="text-sm font-medium">Leaderboard</span>
                 </button>
 
                 <button 
                   onClick={() => { onOpenMap(); setMobileMenuOpen(false) }}
-                  className="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-secondary text-left"
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 active:bg-secondary/60 transition-colors text-left"
                 >
-                  <Map className="w-4 h-4 text-chart-4" />
-                  <span className="text-sm">Stadium Map</span>
+                  <Map className="w-5 h-5 text-chart-4" />
+                  <span className="text-sm font-medium">Stadium Map</span>
                 </button>
 
                 <button 
                   onClick={() => { onOpenOrders(); setMobileMenuOpen(false) }}
-                  className="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-secondary text-left"
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 active:bg-secondary/60 transition-colors text-left"
                 >
-                  <Package className="w-4 h-4" />
-                  <span className="text-sm">My Orders</span>
+                  <Package className="w-5 h-5" />
+                  <span className="text-sm font-medium">My Orders</span>
                 </button>
               </div>
             </motion.div>

@@ -57,7 +57,7 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+          className="fixed inset-0 bottom-16 md:bottom-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-background/80 backdrop-blur-sm"
           onClick={onClose}
         >
           <motion.div
@@ -65,7 +65,7 @@ export function RatingModal({ item, onClose, onSubmit }: RatingModalProps) {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             onClick={e => e.stopPropagation()}
-            className="w-full max-w-lg glass-card rounded-t-3xl sm:rounded-3xl overflow-hidden"
+            className="w-full max-w-lg glass-card rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] overflow-y-auto"
           >
             {/* Header Image */}
             <div className="relative h-40">
