@@ -186,7 +186,7 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
       ) : (
       <motion.div 
         layout
-        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+        className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
       >
         <AnimatePresence mode="popLayout">
           {filteredItems.map((item, index) => (
@@ -199,9 +199,9 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
               transition={{ delay: index * 0.05 }}
               whileHover={{ y: -4 }}
               onClick={() => onSelectItem(item)}
-              className="glass-card rounded-2xl overflow-hidden cursor-pointer group"
+              className="glass-card rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer group"
             >
-              <div className="relative h-40 sm:h-36 overflow-hidden">
+              <div className="relative aspect-[4/3] overflow-hidden">
                 <img 
                   src={item.image} 
                   alt={item.name}
@@ -218,10 +218,10 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
                       e.stopPropagation()
                       toggleFavorite(item.id)
                     }}
-                    className="absolute top-3 left-3 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center"
+                    className="absolute top-2 left-2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center"
                   >
                     <Heart 
-                      className={`w-4 h-4 transition-colors ${
+                      className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${
                         isFavorite(item.id) 
                           ? 'fill-red-500 text-red-500' 
                           : 'text-muted-foreground hover:text-red-500'
@@ -231,58 +231,59 @@ export function FoodGrid({ onSelectItem, searchQuery = '' }: FoodGridProps) {
                 )}
 
                 {/* Price Tag */}
-                <div className="absolute top-3 right-3 px-2 py-1 rounded-lg bg-background/80 backdrop-blur-sm">
-                  <span className="text-sm font-bold">Rs.{item.price}</span>
+                <div className="absolute top-2 right-2 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg bg-background/80 backdrop-blur-sm">
+                  <span className="text-xs sm:text-sm font-bold">Rs.{item.price}</span>
                 </div>
 
                 {/* Tags */}
-                <div className="absolute bottom-3 left-3 flex gap-1.5">
+                <div className="absolute bottom-2 left-2 flex gap-1">
                   {item.tags.includes('Popular') && (
-                    <Badge variant="secondary" className="bg-primary/90 text-primary-foreground text-[10px] gap-1">
-                      <Flame className="w-3 h-3" /> Popular
+                    <Badge variant="secondary" className="bg-primary/90 text-primary-foreground text-[9px] sm:text-[10px] gap-0.5 sm:gap-1 px-1.5 py-0.5">
+                      <Flame className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> <span className="hidden sm:inline">Popular</span><span className="sm:hidden">Hot</span>
                     </Badge>
                   )}
                   {item.tags.includes('Vegetarian') && (
-                    <Badge variant="secondary" className="bg-accent/90 text-accent-foreground text-[10px] gap-1">
-                      <Leaf className="w-3 h-3" /> Veg
+                    <Badge variant="secondary" className="bg-accent/90 text-accent-foreground text-[9px] sm:text-[10px] gap-0.5 sm:gap-1 px-1.5 py-0.5">
+                      <Leaf className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Veg
                     </Badge>
                   )}
                 </div>
               </div>
 
-              <div className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-base truncate">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">{item.stallName}</p>
+              <div className="p-2.5 sm:p-4">
+                <div className="flex items-start justify-between gap-1.5 sm:gap-2">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold text-sm sm:text-base truncate">{item.name}</h3>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 truncate">{item.stallName}</p>
                   </div>
-                  <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-primary/10">
-                    <Star className="w-3.5 h-3.5 fill-primary text-primary" />
-                    <span className="text-sm font-bold">{item.rating}</span>
+                  <div className="flex items-center gap-0.5 sm:gap-1 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md sm:rounded-lg bg-primary/10 shrink-0">
+                    <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-primary text-primary" />
+                    <span className="text-xs sm:text-sm font-bold">{item.rating}</span>
                   </div>
                 </div>
 
-                <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{item.description}</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mt-1.5 sm:mt-2 line-clamp-2 hidden sm:block">{item.description}</p>
 
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
+                <div className="flex items-center justify-between mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-border gap-1.5">
                   <Button 
                     size="sm" 
                     variant="outline" 
-                    className="text-xs"
+                    className="text-[10px] sm:text-xs h-7 sm:h-8 px-2 sm:px-3"
                     onClick={(e) => handleViewStall(e, item.stallId)}
                   >
-                    View Stall
-                    <ChevronRight className="w-3 h-3 ml-1" />
+                    <span className="hidden sm:inline">View Stall</span>
+                    <span className="sm:hidden">Stall</span>
+                    <ChevronRight className="w-3 h-3 ml-0.5 sm:ml-1" />
                   </Button>
                   <Button 
                     size="sm" 
-                    className="text-xs gap-1"
+                    className="text-[10px] sm:text-xs gap-0.5 sm:gap-1 h-7 sm:h-8 px-2 sm:px-3"
                     onClick={(e) => handleAddToCart(e, item)}
                   >
                     {addedItems[item.id] ? (
                       <>
                         <ShoppingCart className="w-3 h-3" />
-                        Added!
+                        <span className="hidden sm:inline">Added!</span>
                       </>
                     ) : (
                       <>
